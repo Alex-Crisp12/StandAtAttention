@@ -1,0 +1,6 @@
+The game area is a size of 32 by 18, with 0,0 being the center.
+Up and Right are both positive (like in desmos, yippee)
+
+The point input action is used for the 3 different input types.
+
+T toggles which of the three inputs is being used (mouse, eye and controller gyro).
