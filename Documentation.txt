@@ -4,3 +4,8 @@ Up and Right are both positive (like in desmos, yippee)
 The point input action is used for the 3 different input types.
 
 T toggles which of the three inputs is being used (mouse, eye and controller gyro).
+
+
+Player is a rigidbody circle that can jump (pretty simple)
+
+Making permanent assets layer order 0 or less, things that are off by default 1 and things that are on by default 1.

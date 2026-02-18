@@ -282,7 +282,7 @@
       "url": "https://packages.unity.com"
     },
     "tech.eyeware.beam-eye-tracker": {
-      "version": "file:G:/Unity/Github/beam_eye_tracker_sdk/beam_eye_tracker_sdk-2.1.0/unity/beam-eye-tracker-plugin",
+      "version": "file:D:/New folder/beam_eye_tracker_sdk-2.1.0/unity/beam-eye-tracker-plugin",
       "depth": 0,
       "source": "local",
       "dependencies": {
