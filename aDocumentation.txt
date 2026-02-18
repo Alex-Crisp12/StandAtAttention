@@ -9,3 +9,5 @@ T toggles which of the three inputs is being used (mouse, eye and controller gyr
 Player is a rigidbody circle that can jump (pretty simple)
 
 Making permanent assets layer order 0 or less, things that are off by default 1 and things that are on by default 1.
+
+As long as you don't scale it, the ToggleableSolid square works correctly :)

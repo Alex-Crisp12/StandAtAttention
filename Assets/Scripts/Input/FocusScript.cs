@@ -69,7 +69,7 @@ public class FocusScript : MonoBehaviour
     void setPosition(Vector2 pos)
     {
         //Debug.Log("Moving To" + pos);
-        this.gameObject.transform.position = pos;
+        transform.position = pos;
     }
 
     InputAction pointM;
@@ -96,7 +96,11 @@ public class FocusScript : MonoBehaviour
 
     public static Vector2 getCenter()
     {
-        return sprite.transform.position;
+        if (sprite == null)
+        {
+            return new Vector2(0, 0);
+        }
+        return sprite.gameObject.transform.position;
     }
 
     public static float getRadius()
@@ -137,5 +141,20 @@ public class FocusScript : MonoBehaviour
         }
 
         return results;
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.GetComponentInParent<ToggleableObject>() != null && collision == collision.GetComponentInParent<BoxCollider2D>())
+        {
+            collision.GetComponentInParent<ToggleableObject>().overlapping = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.GetComponentInParent<ToggleableObject>() != null && collision == collision.GetComponentInParent<BoxCollider2D>())
+        {
+            collision.GetComponentInParent<ToggleableObject>().Exit();
+        }
     }
 }

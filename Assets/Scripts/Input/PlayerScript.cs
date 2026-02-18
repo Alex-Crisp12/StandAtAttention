@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -32,8 +33,8 @@ public class PlayerScript : MonoBehaviour
         {
             hasJumped = true;
             body.linearVelocityY += jump_strength;
-            onFloor = false;
             body.linearVelocityX += intent.x * jump_strength / 4;
+            onFloor = false;
         }
 
         body.linearVelocity += intent * (onFloor ? acceleration_speed : air_acceleration_speed) * Time.deltaTime;
@@ -41,7 +42,16 @@ public class PlayerScript : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        onFloor = true;
+        System.Collections.Generic.List<ContactPoint2D> points = new System.Collections.Generic.List<ContactPoint2D>();
+        int total = collision.GetContacts(points);
+        foreach (ContactPoint2D contact in points)
+        {
+            if (contact.point.y < body.transform.position.y - 0.3f)
+            {
+                onFloor = true;
+                return;
+            }
+        }
     }
 
     bool onFloor = false;
