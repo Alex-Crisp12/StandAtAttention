@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -8,6 +9,8 @@ public class PlayerScript : MonoBehaviour
     public float jump_strength = 10.0f;
     public float acceleration_speed = 10.0f;
     public float air_acceleration_speed = 4.0f;
+    public PlayerSpawn spawn;
+    public Boolean spawned = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -15,6 +18,12 @@ public class PlayerScript : MonoBehaviour
         jump = InputSystem.actions.FindAction("Jump");
         move = InputSystem.actions.FindAction("Move");
         body = GetComponent<Rigidbody2D>();
+    }
+
+    public void setPosition(Vector2 pos)
+    {
+        body.linearVelocityX = body.linearVelocityY = 0.0f;
+        body.position = pos;
     }
 
     // Update is called once per frame
@@ -42,6 +51,11 @@ public class PlayerScript : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (collision.gameObject.CompareTag("Respawn"))
+        {
+            spawn.Respawn();
+            return;
+        }
         System.Collections.Generic.List<ContactPoint2D> points = new System.Collections.Generic.List<ContactPoint2D>();
         int total = collision.GetContacts(points);
         foreach (ContactPoint2D contact in points)

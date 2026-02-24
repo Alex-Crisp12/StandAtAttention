@@ -24,14 +24,35 @@ public class ToggleableSolid : ToggleableObject
                 break;
             }
         }
+        //box.transform.localScale = sprite.size;
+        //transform.localScale = new Vector3( 1.0f, 1, 1);
         collidor = GetComponent<CompositeCollider2D>();
         if (enables)
         {
             circle.compositeOperation = Collider2D.CompositeOperation.Intersect;
             box.compositeOperation = Collider2D.CompositeOperation.Intersect;
+            if (CompareTag("Respawn"))
+            {
+                sprite.color = Color.red;
+            }
+            else
+            {
+                sprite.color = Color.purple;
+            }
+        }
+        else
+        {
+            if (CompareTag("Respawn"))
+            {
+                sprite.color = Color.red;
+            }
+            else
+            {
+                sprite.color = Color.turquoise;
+            }
         }
 
-        RemakeCollider();
+            RemakeCollider();
     }
 
     override protected void RemakeCollider()
