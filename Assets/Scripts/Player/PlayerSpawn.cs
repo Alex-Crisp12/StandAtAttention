@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -28,8 +29,12 @@ public class PlayerSpawn : MonoBehaviour
 
     public void Respawn()
     {
-        player.setPosition(position);
-        player.spawned = true;
+        if (player != null)
+        {
+            Console.WriteLine("Yup, Respawning");
+            player.setPosition(position);
+            player.spawned = true;
+        }
     }
 
     // Update is called once per frame

@@ -1,15 +1,14 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class LevelEnd : MonoBehaviour
 {
-    private CircleCollider2D collidor;
     public string LevelName;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        collidor = GetComponent<CircleCollider2D>();
     }
 
     // Update is called once per frame
@@ -18,10 +17,12 @@ public class LevelEnd : MonoBehaviour
         
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
+        Console.WriteLine("Checking");
         if (collision.gameObject.CompareTag("Player"))
         {
+            Console.WriteLine(collision.gameObject.name);
             SceneManager.LoadScene(LevelName, LoadSceneMode.Single);
         }
     }
