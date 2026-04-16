@@ -17,7 +17,7 @@
     "com.unity.timeline": "1.8.7",
     "com.unity.ugui": "2.0.0",
     "com.unity.visualscripting": "1.9.7",
-    "tech.eyeware.beam-eye-tracker": "file:G:/Unity/Github/beam_eye_tracker_sdk/beam_eye_tracker_sdk-2.1.0/unity/beam-eye-tracker-plugin",
+    "tech.eyeware.beam-eye-tracker": "file:D:/RubyStuff/beam_eye_tracker_sdk-2.1.0/unity/beam-eye-tracker-plugin",
     "com.unity.modules.accessibility": "1.0.0",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",

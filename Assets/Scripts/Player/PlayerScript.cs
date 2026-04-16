@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,6 +10,7 @@ public class PlayerScript : MonoBehaviour
     public float air_acceleration_speed = 4.0f;
     public PlayerSpawn spawn;
     public Boolean spawned = false;
+    public static Vector2 pos;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -47,6 +47,7 @@ public class PlayerScript : MonoBehaviour
         }
 
         body.linearVelocity += intent * (onFloor ? acceleration_speed : air_acceleration_speed) * Time.deltaTime;
+        pos = body.position;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

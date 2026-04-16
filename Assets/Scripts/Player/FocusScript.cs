@@ -63,7 +63,7 @@ public class FocusScript : MonoBehaviour
                 rawPosition.y -= 9;
                 break;
         }
-        setPosition(rawPosition);
+        setPosition(rawPosition + new Vector2(CameraMovingScript.pos.x, CameraMovingScript.pos.y));
     }
 
     void setPosition(Vector2 pos)
