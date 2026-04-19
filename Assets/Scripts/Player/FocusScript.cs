@@ -14,7 +14,7 @@ public class FocusScript : BeamEyeTrackerMonoBehaviour
     static InputMode inputMode = InputMode.Mouse;
     static SpriteRenderer sprite;
     public static CircleCollider2D collidor;
-    public static float radius = 1.0f;
+    public static float radius = 1.5f;
     private Color[] colours = new Color[3];
     public Camera theCamera;
 
@@ -31,6 +31,7 @@ public class FocusScript : BeamEyeTrackerMonoBehaviour
         colours[(int)InputMode.Dualsense] = Color.lightSeaGreen;
         colours[(int)InputMode.Mouse] = Color.lightPink;
         for (int index = 0; index != 3; index++) { colours[index].a = 0.25f; }
+        collidor = GetComponent<CircleCollider2D>();
         collidor.radius = radius;
         betControls.Disable();
     }
@@ -166,6 +167,10 @@ public class FocusScript : BeamEyeTrackerMonoBehaviour
         {
             collision.GetComponentInParent<ToggleableObject>().overlapping = true;
         }
+        else if (collision.GetComponentInParent<ShyObject>() != null && collision == collision.GetComponentInParent<BoxCollider2D>())
+        {
+            collision.GetComponentInParent<ShyObject>().SetObserved(true);
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -173,6 +178,10 @@ public class FocusScript : BeamEyeTrackerMonoBehaviour
         if (collision.GetComponentInParent<ToggleableObject>() != null && collision == collision.GetComponentInParent<BoxCollider2D>())
         {
             collision.GetComponentInParent<ToggleableObject>().Exit();
+        }
+        else if (collision.GetComponentInParent<ShyObject>() != null && collision == collision.GetComponentInParent<BoxCollider2D>())
+        {
+            collision.GetComponentInParent<ShyObject>().SetObserved(false);
         }
     }
 }

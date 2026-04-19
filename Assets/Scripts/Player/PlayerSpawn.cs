@@ -29,7 +29,7 @@ public class PlayerSpawn : MonoBehaviour
 
     public void Respawn()
     {
-        if (player != null)
+        if (player != null && player.initialised)
         {
             Console.WriteLine("Yup, Respawning");
             player.setPosition(position);

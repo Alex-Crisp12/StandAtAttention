@@ -12,6 +12,7 @@ public class PlayerScript : MonoBehaviour
     public PlayerSpawn spawn;
     public Boolean spawned = false;
     public static Vector2 pos;
+    public bool initialised = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -19,6 +20,7 @@ public class PlayerScript : MonoBehaviour
         jump = InputSystem.actions.FindAction("Jump");
         move = InputSystem.actions.FindAction("Move");
         body = GetComponent<Rigidbody2D>();
+        initialised = true;
     }
 
     public void setPosition(Vector2 pos)
@@ -70,6 +72,11 @@ public class PlayerScript : MonoBehaviour
                 return;
             }
         }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        Console.WriteLine("Left Collision");
     }
 
     bool onFloor = false;

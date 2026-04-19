@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MovingPlatform : MonoBehaviour
+public class MovingPlatform : ShyObject
 {
     public float TimeInAnimation = 0.0f;
     public float AnimationDuration = 5.0f;
@@ -10,13 +10,26 @@ public class MovingPlatform : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        UpdatePosition();
+        eyes.sprite = Resources.Load<Sprite>("EyesRight");
     }
 
     // Update is called once per frame
     void Update()
     {
-        TimeInAnimation += Time.deltaTime;
+        if (observed == activeWhenObserved)
+        {
+            TimeInAnimation += Time.deltaTime;
+            UpdatePosition();
+        }
+        if (!observed)
+        {
+            animateEyes();
+        }
+    }
+
+    void UpdatePosition()
+    {
         if (TimeInAnimation > AnimationDuration)
             TimeInAnimation -= AnimationDuration;
         if (TimeInAnimation < AnimationDuration / 2.0f)
