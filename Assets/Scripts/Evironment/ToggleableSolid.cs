@@ -15,6 +15,7 @@ public class ToggleableSolid : ToggleableObject
         sprite = GetComponent<SpriteRenderer>();
         enables = sprite.maskInteraction == SpriteMaskInteraction.VisibleInsideMask;
         circle = GetComponent<CircleCollider2D>();
+        circle.radius = 1.5f;
         body = GetComponent<Rigidbody2D>();
         foreach (BoxCollider2D box_ in GetComponents<BoxCollider2D>())
         {

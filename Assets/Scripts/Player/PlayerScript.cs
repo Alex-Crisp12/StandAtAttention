@@ -31,6 +31,7 @@ public class PlayerScript : MonoBehaviour
     void Update()
     {
         Vector2 intent = move.ReadValue<Vector2>();
+        intent.y = Math.Min(intent.y, 0);
 
         if (hasJumped)
         {

@@ -1,8 +1,9 @@
+using Eyeware.BeamEyeTracker.Unity;
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class FocusScript : MonoBehaviour
+public class FocusScript : BeamEyeTrackerMonoBehaviour
 {
     enum InputMode { 
         EyeTracking,
@@ -13,7 +14,9 @@ public class FocusScript : MonoBehaviour
     static InputMode inputMode = InputMode.Mouse;
     static SpriteRenderer sprite;
     public static CircleCollider2D collidor;
-    static float radius = 1.0f;
+    public static float radius = 1.0f;
+    private Color[] colours = new Color[3];
+    public Camera theCamera;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -24,21 +27,12 @@ public class FocusScript : MonoBehaviour
         pointE = InputSystem.actions.FindAction("PointEyes");
         pointC = InputSystem.actions.FindAction("PointController");
         toggle = InputSystem.actions.FindAction("ToggleInputs");
-
-        //if (betInputDevice)
-        //{
-        //    sprite.color = Color.lightPink;
-        //    inputMode = InputMode.EyeTracking;
-        //}
-        //if ()
-        //{
-        //    sprite.color = Color.lightBlue;
-        //    inputMode = InputMode.Dualsense;
-        //}
-        //else
-        //{
-        //    sprite.color = Color.lightYellow;
-        //}
+        colours[(int)InputMode.EyeTracking] = Color.lightBlue;
+        colours[(int)InputMode.Dualsense] = Color.lightSeaGreen;
+        colours[(int)InputMode.Mouse] = Color.lightPink;
+        for (int index = 0; index != 3; index++) { colours[index].a = 0.25f; }
+        collidor.radius = radius;
+        betControls.Disable();
     }
 
     // Update is called once per frame
@@ -50,7 +44,22 @@ public class FocusScript : MonoBehaviour
         switch (inputMode)
         {
             case InputMode.EyeTracking:
-                rawPosition = pointE.ReadValue<Vector2>();
+                rawPosition = betInputDevice.viewportGazePosition.ReadValue();
+                //rawPosition *= new Vector2(32, 18);
+
+                // Clamp gaze position to viewport bounds (0-1)
+                rawPosition.x = Mathf.Clamp01(rawPosition.x);
+                rawPosition.y = Mathf.Clamp01(rawPosition.y);
+
+                // Convert screen (pixel) coordinates to world space
+                Vector3 screenPosition = new Vector3(
+                    rawPosition.x * Screen.width,
+                    rawPosition.y * Screen.height,
+                    theCamera.nearClipPlane
+                );
+                Vector3 worldPosition = theCamera.ScreenToWorldPoint(screenPosition);
+                rawPosition.x = worldPosition.x;
+                rawPosition.y = worldPosition.y;
                 break;
             case InputMode.Dualsense:
                 rawPosition = pointC.ReadValue<Vector2>();
@@ -91,6 +100,15 @@ public class FocusScript : MonoBehaviour
         {
             isToggled = true;
             inputMode = (InputMode)(((int)inputMode + 1) % 3);
+            sprite.color = colours[(int)inputMode];
+            if (inputMode == InputMode.EyeTracking)
+            {
+                betControls.Enable();
+            }
+            else
+            {
+                betControls.Disable();
+            }
         }
     }
 
